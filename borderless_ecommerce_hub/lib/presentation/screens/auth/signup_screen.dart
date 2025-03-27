@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_screen.dart'; // Import the LoginScreen
 import 'password_reset_screen.dart'; // Import ForgotPasswordScreen
 
 class SignupScreen extends StatelessWidget {
@@ -10,22 +11,21 @@ class SignupScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-          children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () {
-                  Navigator.pop(context); // Go back to Signin Screen
-                },
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () {
+                    Navigator.pop(context); // Go back to Sign-in Screen
+                  },
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              "Create Account",
-              style: TextStyle(fontSize: 28, color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 20),
+              SizedBox(height: 20),
+              Text(
+                "Create Account",
+                style: TextStyle(fontSize: 28, color: Colors.white, fontWeight: FontWeight.bold),
+              ),
               SizedBox(height: 20),
               _buildTextField('First Name'),
               SizedBox(height: 10),
@@ -44,12 +44,18 @@ class SignupScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // ✅ Navigate to Sign-in screen after signing up
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  },
                   child: Text('Continue', style: TextStyle(color: Colors.white)),
                 ),
               ),
               SizedBox(height: 10),
-              /// 🔹 Added Forgot Password Button
+              /// 🔹 Forgot Password Button
               TextButton(
                 onPressed: () {
                   Navigator.push(

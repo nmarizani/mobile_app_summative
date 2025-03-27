@@ -1,26 +1,38 @@
 import 'package:borderless_ecommerce_hub/presentation/screens/auth/signup_screen.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class PasswordResetConfirmation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginScreen(),
-        '/password_reset': (context) => const PasswordResetConfirmationScreen(),
-      },
+    return Scaffold(
+      backgroundColor: const Color(0xFF121126),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.email_outlined, color: Colors.purpleAccent, size: 80),
+            const SizedBox(height: 20),
+            const Text(
+              "We sent you an email to reset your password!",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context); // Go back to Forgot Password screen
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFAA7DFF),
+              ),
+              child: const Text("Return to Login", style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
-
 // LOGIN SCREEN
 class LoginScreen extends StatelessWidget {
   @override

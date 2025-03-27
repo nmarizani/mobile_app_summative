@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'onboarding_screen.dart'; // Import Onboarding Screen
 import 'signup_screen.dart'; // Import SignupScreen
 import 'password_reset_screen.dart'; // Import ForgotPasswordScreen
 
 class LoginScreen extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +28,7 @@ class LoginScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               TextField(
+                controller: emailController,
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   filled: true,
@@ -46,13 +51,23 @@ class LoginScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    // ✅ Save sign-in state
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.setBool('isSignedIn', true);
+
+                    // ✅ Navigate to OnboardingScreen
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => OnboardingScreen()),
+                    );
+                  },
                   child: Text('Continue', style: TextStyle(color: Colors.white)),
                 ),
               ),
               SizedBox(height: 10),
 
-              /// 🔹 Added Forgot Password Button
+              /// 🔹 Forgot Password Button
               TextButton(
                 onPressed: () {
                   Navigator.push(
@@ -106,7 +121,7 @@ class LoginScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {}, // TODO: Implement Social Sign-In
         icon: Image.asset(iconPath, height: 24),
         label: Text(text, style: TextStyle(color: Colors.white)),
       ),
