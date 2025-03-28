@@ -1,76 +1,78 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const ForgotPasswordApp());
-}
-
-class ForgotPasswordApp extends StatelessWidget {
-  const ForgotPasswordApp({super.key});
+class ForgotPasswordScreen extends StatefulWidget {
+  const ForgotPasswordScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: ForgotPasswordScreen(),
-    );
-  }
+  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
 }
 
-class ForgotPasswordScreen extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+ final TextEditingController emailController = TextEditingController();
 
-  ForgotPasswordScreen({super.key});
+  void _sendPasswordResetEmail() async {
+    String email = emailController.text.trim();
+
+    if (email.isEmpty) {
+      _showMessage("Please enter your email.");
+      return;
+    }
+  }
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.purpleAccent,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF121126), // Dark background
+      backgroundColor: const Color(0xFF121126),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
                 "Forgot Password",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
               TextField(
                 controller: emailController,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  hintText: "Enter Email address",
-                  hintStyle: const TextStyle(color: Colors.white60),
+                  hintText: "Enter Email Address",
+                  hintStyle: const TextStyle(color: Colors.grey),
                   filled: true,
-                  fillColor: Colors.white10,
+                  fillColor: const Color(0xFF1E1E2C),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide.none,
                   ),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                 ),
               ),
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Handle Forgot Password Logic
-                  },
+                  onPressed: _sendPasswordResetEmail,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFAA7DFF), // Purple button
+                    backgroundColor: const Color(0xFFAA7DFF),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                   child: const Text(
-                    "Continue",
+                    "Send Reset Email",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),

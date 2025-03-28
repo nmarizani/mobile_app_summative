@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:borderless_ecommerce_hub/presentation/screens/home/product/smartwatch_product_listing.dart';
 
 void main() {
   runApp(const MyApp());
@@ -127,24 +128,34 @@ class HoodiesScreen extends StatelessWidget {
         crossAxisCount: 2,
         padding: const EdgeInsets.all(10),
         children: [
-          _buildHoodieCard("Men's Fleece Pullover Hoodie", 100, 'assets/hoodie1.png'),
-          _buildHoodieCard("Fleece Skate Hoodie", 150, 'assets/hoodie2.png'),
-          _buildHoodieCard("Men's Ice-Dye Pullover Hoodie", 120, 'assets/hoodie3.png'),
-          _buildHoodieCard("Classic Green Hoodie", 90, 'assets/hoodie4.png'),
+          _buildHoodieCard(context, "Men's Fleece Pullover Hoodie", 100, 'assets/hoodie1.png', true), // First hoodie navigates
+          _buildHoodieCard(context, "Fleece Skate Hoodie", 150, 'assets/hoodie2.png', false),
+          _buildHoodieCard(context, "Men's Ice-Dye Pullover Hoodie", 120, 'assets/hoodie3.png', false),
+          _buildHoodieCard(context, "Classic Green Hoodie", 90, 'assets/hoodie4.png', false),
         ],
       ),
     );
   }
 
-  Widget _buildHoodieCard(String title, int price, String imagePath) {
-    return Card(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(imagePath, height: 100),
-          Text(title, style: const TextStyle(fontSize: 16)),
-          Text('\$$price', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-        ],
+  Widget _buildHoodieCard(BuildContext context, String title, int price, String imagePath, bool navigateToProductListing) {
+    return GestureDetector(
+      onTap: () {
+        if (navigateToProductListing) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ProductListingScreen()),
+          );
+        }
+      },
+      child: Card(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(imagePath, height: 100),
+            Text(title, style: const TextStyle(fontSize: 16)),
+            Text('\$$price', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+          ],
+        ),
       ),
     );
   }
